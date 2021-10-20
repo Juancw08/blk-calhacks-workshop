@@ -19,7 +19,8 @@ def postRequest():
 	}
 
 	response = requests.post(host, data=payload, params=headers)
-	print(response.text)
+	print(response.url)
+	print(response.json())
 	print(f"Response received with status: {response.status_code}")
 
 	if response.status_code == requests.codes.ok:

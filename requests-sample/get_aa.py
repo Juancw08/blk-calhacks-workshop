@@ -5,17 +5,15 @@ from datetime import date
 """
 	sample GET request to alphadvantage api
 	ref: https://www.alphavantage.co/documentation/#dailyadj
-
-	better documented api: https://polygon.io/docs/get_vX_reference_options_contracts_anchor
 """
 def getAlphaAdvantage():
-	API_KEY=os.getenv("ALPHAD_API_KEY")
+	API_KEY=os.getenv("ALPHAD_API_KEY") # replace with oyur API KEY, get one from ref above
 	ticker='TSLA'
 	function= "TIME_SERIES_DAILY_ADJUSTED"
 
 	
 	parameters = {
-		"apikey" : API_KEY,
+		"apikey" : "API_KEY",
 		"symbol" : ticker,
 		"function" : function,
 		# "outputsize" :"compact"
@@ -23,20 +21,20 @@ def getAlphaAdvantage():
 
 	host = 'https://www.alphavantage.co/query'
 	
-	response = requests.get(schemeNhost, params=parameters)
+	response = requests.get(host, params=parameters)
 	print(response.url)
 
 	if response.status_code == requests.codes.ok:
 		print(f"Response received with status: {response.status_code}")
 		data = response.json()
-		print(data)
+		# print(data)
 
 		#show metadata
-		# metadata=data["Meta Data"]
-		# print(metadata)
+		metadata=data["Meta Data"]
+		print(metadata)
 
-		#narrow down to todays stock price
-		# print(data["Time Series (Daily)"][todayHelper()])
+		#narrow down to last refreshed  stock price
+		print(data["Time Series (Daily)"][metadata['3. Last Refreshed']])
 
 # today in YYYY-MM-DD
 def todayHelper():
